@@ -1,0 +1,17 @@
+{% extends "base.html.twig"%}
+
+{% block body %}
+
+
+<h3>Update Form</h1>
+
+{% for message in app.flashes('notice') %}
+    {{message}}
+{%endfor%}
+{{form_start(form)}}
+{{ form(form) }}
+
+{{ form_end(form)}}
+<br>
+<button class="btn btn-primary"><a href="{{ path('main' )}}">Display</a></button>
+{% endblock%}
