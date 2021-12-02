@@ -3,16 +3,25 @@
 
 {% block body %}
 
-
-<h3>Create Form</h1>
+<div class="container my-5 ">
+<h1>Create Form</h1>
 
 {% for message in app.flashes('notice') %}
     {{message}}
+    
 {%endfor%}
-{{form_start(form)}}
+
+
+
 {{ form(form) }}
 
-{{ form_end(form)}}
-<br>
-<button class="btn btn-primary"><a href="main" class="text-light">Display</a></button>
+
+
+<br> 
+
+    <button class="btn btn-info"><a href="main" class="text-light">Display</a> </button>
+    <button class="btn btn-info"><a href="{{path('app_logout')}}" class="text-light text-decoration-none">Logout</a> </button>
+
+        
+    </div>
 {% endblock%}

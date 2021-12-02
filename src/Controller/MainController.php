@@ -9,19 +9,25 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Task;
 use App\Form\TaskType;
+use Knp\Component\Pager\PaginatorInterface;
 
 class MainController extends AbstractController
 {
     /**
      * @Route("/main", name="main")
      */
-    public function index(): Response
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
         $user = $this->getUser();
         $id = $user->getId();
-        $data = $this->getDoctrine()->getRepository(Task::class)->findBy(['userid' => $id]);
+        $data = $this->getDoctrine()->getRepository(Task::class)->findByID($id);
+        $result = $paginator->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 3),
+        );
         return $this->render('main/index.html.twig', [
-            'add' => $data
+            'add' => $result
         ]);
     }
 
@@ -37,8 +43,8 @@ class MainController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $task = $form->getData();
             $user = $this->getUser();
-            $id = $user->getId();
-            $task->setUserID($id);
+
+            $task->setUserID($user);
             // $task = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($task);
@@ -87,9 +93,7 @@ class MainController extends AbstractController
 
             $this->addFlash('notice', 'Update inserted');
         }
-        return $this->render('main/update.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->render('main/index.html.twig');
     }
 
     /**
@@ -98,9 +102,28 @@ class MainController extends AbstractController
     public function try()
     {
         $user = $this->getUser();
+        dd($user);
         $id = $user->getId();
         $data = $this->getDoctrine()->getRepository(Task::class)->findBy(['userid' => $id]);
-
         dd($data);
+    }
+
+    /**
+     * @Route("/join", name="join")
+     */
+    public function leftJoin(Request $request, PaginatorInterface $paginator): Response
+    {
+        $user = $this->getUser();
+        $id = $user->getId();
+        $data = $this->getDoctrine()->getRepository(Task::class)->leftJoin($id);
+
+        $result = $paginator->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 3),
+        );
+        return $this->render('Join.html.twig', [
+            'Join' => $result
+        ]);
     }
 }

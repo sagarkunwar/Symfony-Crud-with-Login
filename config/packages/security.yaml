@@ -6,6 +6,10 @@ security:
     App\Entity\User:
       algorithm: auto
 
+  role_hierarchy:
+    ROLE_ADMIN: ROLE_USER
+    ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
   # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
   providers:
     # used to reload user from session & other features (e.g. switch_user)
@@ -28,7 +32,7 @@ security:
         # "login" is the name of the route created previously
         login_path: login
         check_path: login
-        default_target_path: log
+        default_target_path: create
 
       # activate different ways to authenticate
       # https://symfony.com/doc/current/security.html#the-firewall
@@ -39,5 +43,9 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-    # - { path: ^/admin, roles: ROLE_ADMIN }
-    # - { path: ^/profile, roles: ROLE_USER }
+    - { path: ^/admin, roles: ROLE_ADMIN }
+    - { path: ^/profile, roles: ROLE_USER }
+    - { path: ^/main, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
+    - { path: ^/update, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
+    - { path: ^/delete, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
+    - { path: ^/create, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }

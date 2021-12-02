@@ -18,7 +18,7 @@ class Task
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      */
     private $userid;
 
@@ -37,12 +37,12 @@ class Task
         return $this->id;
     }
 
-    public function getUserID(): ?string
+    public function getUserID(): ?User
     {
         return $this->userid;
     }
 
-    public function setUserID(string $userid): self
+    public function setUserID(?User $userid): self
     {
         $this->userid = $userid;
 

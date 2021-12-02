@@ -7,35 +7,31 @@
 <div class="container my-5 ">
 <div class="card">
 <article class="card-body">
-        <button class="btn btn-primary"><a href="create" class="text-light">Add Task</a> </button>
         <table class="table table-striped my-5">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">S.no</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">UserID</th>
                     <th scope="col">Task</th>
                     <th scope="col">Details</th>
-                    <th scope="col">Operations</th>
                 </tr>
             </thead>
             <tbody>
-            {% for data in add %}
+            {% for data in Join %}
                 <tr>
                     <th scope="row">{{data.id}}</th>
+                    <td>{{data.userid.email}}</td>
+                    <td>{{data.userid.id}}</td>
                     <td>{{data.tasktype}}</td>
-                    <td>{{data.dueDate}}</td>
-                    <td>
-                        
-                        <button class="btn btn-info"><a href="{{ path('task_update',{'id': data.id} )}}" class="text-light">Update</a></button>
-                        <button class="btn btn-danger"><a href="{{ path('task_delete',{'id': data.id} )}}" class="text-light">delete</a></button>
-                     </td>
-                    
+                    <td>{{data.dueDate}}</td>           
                 </tr>
             {% endfor %}
 
             </tbody>
         </table>
         <div class="navigation">
-            {{ knp_pagination_render(add) }}
+            {{ knp_pagination_render(Join) }}
     </div>
     </article>
     </div>

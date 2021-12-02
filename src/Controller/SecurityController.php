@@ -15,6 +15,6 @@ class SecurityController extends AbstractController
     {
         // controller can be blank: it will never be called!
         // throw new \Exception('Don\'t forget to activate logout in security.yaml');
-        return $this->redirect('login/index.html.twig');
+        return $this->render('login/index.html.twig');
     }
 }

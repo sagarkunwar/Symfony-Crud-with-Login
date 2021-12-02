@@ -3,15 +3,30 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
 
+
+    
+<div class="container text-center my-5 ">
+<div class="card">
+<article class="card-body">
+<h1>Register</h1>
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }} <br>
+        {{ form_row(registrationForm.email, {
+            label: 'Email:'
+        }) }} <br>
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password: '
         }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
+        <br>
+        {{ form_row(registrationForm.agreeTerms, {
+            label: 'Agree terms :  '
+        }) }}
+        <br>
+        
+        <button type="submit" class="btn btn-primary">Register</button>
     {{ form_end(registrationForm) }}
+    </article>
+    </div>
+    </div>
 {% endblock %}
+
